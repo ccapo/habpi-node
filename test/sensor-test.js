@@ -72,7 +72,8 @@ board.on("ready", function() {
     controller: "BMP180",
     // Change `elevation` with whatever is reported on http://www.whatismyelevation.com/
     // Location: 43.4578917 (Latitude), -80.4921175 (Longitude)
-    elevation: 336
+    elevation: 336,
+    freq: 1000
   });
 
   bmp.on("change", function() {
