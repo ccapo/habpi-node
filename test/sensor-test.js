@@ -7,7 +7,7 @@ let board = new five.Board({
 });
 
 board.on("ready", function() {
-  var layout = `
+  let layout = `
   Board layout:
       +----------+
       |         *| RST   PITCH  ROLL  HEADING
@@ -21,7 +21,7 @@ board.on("ready", function() {
 
   console.log(layout);
 
-  /*var gps = new five.GPS({
+  /*let gps = new five.GPS({
     breakout: "ADAFRUIT_ULTIMATE_GPS",
     pins: {
       rx: 11,
@@ -46,7 +46,7 @@ board.on("ready", function() {
     console.log("--------------------------------------");
   });*/
 
-  var mpl = new five.Multi({
+  let mpl = new five.Multi({
     controller: "MPL3115A2",
     // Change `elevation` with whatever is reported on http://www.whatismyelevation.com/
     // Location: 43.4578917 (Latitude), -80.4921175 (Longitude)
@@ -67,8 +67,8 @@ board.on("ready", function() {
     console.log("  meters       : ", this.altimeter.meters);
     console.log("--------------------------------------");*/
   });
-  
-  var bmp = new five.Multi({
+
+  let bmp = new five.Multi({
     controller: "BMP180",
     // Change `elevation` with whatever is reported on http://www.whatismyelevation.com/
     // Location: 43.4578917 (Latitude), -80.4921175 (Longitude)
@@ -91,7 +91,7 @@ board.on("ready", function() {
     console.log("--------------------------------------");*/
   });
 
-  /*var bno = new five.IMU({
+  /*let bno = new five.IMU({
     controller: "BNO055",
     enableExternalCrystal: true // this can be turned on for better performance if you are using the Adafruit board
   });
