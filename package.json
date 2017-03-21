@@ -12,11 +12,18 @@
   "dependencies": {
     "johnny-five": "^0.10.6",
     "raspi-io": "^7.2.4",
-    "sqlite3": "^3.1.8",
+    "sequelize": "^3.30.2",
     "winston": "^2.3.1"
   },
   "devDependencies": {},
   "keywords": [
     "science"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ccapo/habpi-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ccapo/habpi-node/issues"
+  }
 }
