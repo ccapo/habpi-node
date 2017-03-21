@@ -9,5 +9,5 @@ let habpi = new HABPi();
 habpi._sequelize.authenticate().then(() => {
 	habpi.log('Connection has been established successfully', 'alert');
 }).catch(err => {
-	habpi.log(`Unable to connect to the database: ${JSON.stringif(err)}`, 'error');
+	habpi.log(`Unable to connect to the database: ${JSON.stringify(err)}`, 'error');
 });
