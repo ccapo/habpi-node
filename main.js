@@ -1,7 +1,7 @@
 'use strict';
 
-const HabPi = require('./lib/habpi').HabPi;
+const HABPi = require('./lib/habpi').HABPi;
 
-// HabPi API
-let habPi = new HabPi();
+// HABPi API
+let habpi = new HABPi();
 console.log('Hello World!');
