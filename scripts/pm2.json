@@ -1,0 +1,10 @@
+{
+  "apps" : [{
+    "name"        : "HABPi",
+    "cwd"         : "/home/pi/projects/habpi-node/",
+    "script"      : "main.js",
+    "args"        : "",
+    "watch"       : true,
+    "max_memory_restart": "180M"
+  }]
+}
