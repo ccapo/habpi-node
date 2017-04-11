@@ -4,7 +4,7 @@
   "description": "High Altitude Balloon + Raspberry Pi Project",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "/home/pi/.nvm/versions/node/v7.8.0/bin/node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Chris Capobianco",
