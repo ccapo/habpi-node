@@ -30,6 +30,7 @@ void setup() {
   Serial.begin(9600);
   //pinMode(LED_RX, OUTPUT);
   //pinMode(LED_TX, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   i2cInit();
 }
 
@@ -41,6 +42,10 @@ void loop() {
     Packet packet = PacketQueue.pop();
     Serial.print("Packet: ");
     Serial.println(packet.Text);
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(100);                       // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+    delay(100);
   }
   delay(1000);
 }
