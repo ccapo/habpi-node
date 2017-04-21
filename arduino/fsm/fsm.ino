@@ -1,52 +1,85 @@
 #include <FiniteStateMachine.h>
 #include <Entropy.h>
 
-// How many states are we cycling through?
+// Number of states in the FSM
 const byte NUMBER_OF_STATES = 3;
 
-//utility functions
-void ledOn() {
-  digitalWrite(LED_BUILTIN, HIGH);
-}
-
-void ledOff() {
+// State callback functions
+void receive() {
   digitalWrite(LED_BUILTIN, LOW);
 }
 
-void ledBlink() {
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                       // wait for a second
+void send() {
+  digitalWrite(LED_BUILTIN, HIGH);
+
+  // Pause
+  delay(500);
 }
-//end utility functions
+
+void emergency() {
+  // Three dots
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(100);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(100);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+
+  delay(100);
+
+  // Three dashes
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(200);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(200);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(200);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(200);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(200);
+  digitalWrite(LED_BUILTIN, LOW);
+
+  delay(100);
+
+  // Three dots
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(100);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(100);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+}
 
 // Initialize states
-State On = State(ledOn);
-State Off = State(ledOff);
-State Blink = State(ledBlink);
+State receiveState = State(receive);
+State sendState = State(send);
+State emergencyState = State(emergency);
 
-// Initialize state machine, start in state: On
-FSM ledStateMachine = FSM(On);
+// Initialize state machine, start in state: receiveState
+FSM fsm = FSM(receiveState);
 
 // Counter variable
 uint8_t random_byte = 0;
  
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
+  // Pnitialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
 
+  // Wait for serial port to connect. Needed for Leonardo and Due
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for Leonardo and Due
+  while(!Serial) {
+    ;
   }
 
   // This routine sets up the watch dog timer with interrupt handler to maintain a
@@ -57,20 +90,29 @@ void setup() {
 }
 
 void loop(){
-  // Simulate rolling a six sided die; i.e. produce the numbers 1 through 6
-  random_byte = Entropy.random(1,7);
+  // Pick a number between 1 and 3
+  random_byte = Entropy.random(1, 4);
 
-  if(random_byte >= 1 && random_byte <= 2 && !ledStateMachine.isInState(On)) {
-    ledStateMachine.transitionTo(On);
-    Serial.println("On State");
-  } else if(random_byte >= 3 && random_byte <= 4 && !ledStateMachine.isInState(Off)) {
-    ledStateMachine.transitionTo(Off);
-    Serial.println("Off State");
-  } else if(random_byte >= 5 && random_byte <= 6 && !ledStateMachine.isInState(Blink)) {
-    ledStateMachine.transitionTo(Blink);
-    Serial.println("Blink State");
+  if(random_byte == 1 && !fsm.isInState(sendState)) {
+    fsm.transitionTo(sendState);
+    Serial.println("Send State");
+  } else if(random_byte == 2 && !fsm.isInState(receiveState)) {
+    fsm.transitionTo(receiveState);
+    Serial.println("Receive State");
+  } else if(random_byte == 3 && !fsm.isInState(emergencyState)) {
+    fsm.transitionTo(emergencyState);
+    Serial.println("Emergency State");
+  } else {
+    if(fsm.isInState(sendState)) {
+      Serial.println("Send State");
+    } else if(fsm.isInState(receiveState)) {
+      Serial.println("Receive State");
+    } else {
+      Serial.println("Emergency State");
+    }
   }
 
-  ledStateMachine.update();
+  // Update the state machine
+  fsm.update();
   delay(1000);
 }
